@@ -1,0 +1,37 @@
+simpleArgs: &simple-args
+  moneyToTransfer: &money-to-transfer 1
+  numberOfAccounts: 1
+
+test:
+  name: erc20
+  description: >-
+    To benchmark the network transactions.
+  workers:
+    type: local
+    number: 1
+  rounds:
+    # - label: 200 txns with 10-100tps
+    #   description: Transfering erc20 token between accounts.
+    #   txNumber: 200
+    #   rateControl:
+    #     type: linear-rate
+    #     opts:
+    #       startingTps: 10
+    #       finishingTps: 100
+    #   workload:
+    #     module: benchmarks/scenario/simple/transfer.js
+    #     arguments:
+    #       << : *simple-args
+    #       money: *money-to-transfer
+    - label: 1 txns with 1tps
+      description: Transfering erc20 token between accounts.
+      txNumber: 1
+      rateControl:
+        type: fixed-rate
+        opts:
+          tps: 1
+      workload:
+        module: benchmarks/scenario/simple/transfer.js
+        arguments:
+          << : *simple-args
+          money: *money-to-transfer
